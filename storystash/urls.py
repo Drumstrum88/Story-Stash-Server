@@ -16,7 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
+from storystashapi.views.auth import check_user, register_user
+from storystashapi.views.book_views import BookView
+from storystashapi.views.genre_views import GenreView
+from storystashapi.views.stash_book_views import StashBookView
+from storystashapi.views.stash_views import StashView
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'books', BookView, 'book' )
+router.register(r'genres', GenreView, 'genre')
+router.register(r'stashes', StashView, 'stash')
+router.register(r'stashbooks', StashBookView, 'stashbook')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('checkuser', check_user),
+    path('registeruser', register_user),
+    path('', include(router.urls)),
+
 ]

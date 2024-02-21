@@ -42,6 +42,7 @@ def register_user(request):
         first_name=request.data["firstName"],
         last_name=request.data["lastName"],
         uid=request.data["uid"],
+        
     )
 
     # Return the user info to the client

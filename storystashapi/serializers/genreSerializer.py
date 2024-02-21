@@ -6,6 +6,7 @@ from storystashapi.models.genre import Genre
 class GenreSerializer(serializers.ModelSerializer):
   
   class Meta:
-    model: Genre
+    model = Genre
     fields = ('id', 'label')
+    depth = 0
     
