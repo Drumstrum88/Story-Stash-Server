@@ -1,0 +1,47 @@
+[
+  {
+    "model": "storystashapi.stashbook",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "stash": 1,
+      "book": 1
+    }
+  },
+  {
+    "model": "storystashapi.stashbook",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "stash": 1,
+      "book": 2
+    }
+  },
+  {
+    "model": "storystashapi.stashbook",
+    "pk": 3,
+    "fields": {
+      "user": 1,
+      "stash": 1,
+      "book": 3
+    }
+  },
+  {
+    "model": "storystashapi.stashbook",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "stash": 1,
+      "book": 4
+    }
+  },
+  {
+    "model": "storystashapi.stashbook",
+    "pk": 5,
+    "fields": {
+      "user": 1,
+      "stash": 1,
+      "book": 5
+    }
+  }
+]

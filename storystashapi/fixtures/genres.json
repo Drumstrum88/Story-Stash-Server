@@ -1,0 +1,37 @@
+[
+  {
+    "model": "storystashapi.genre",
+    "pk": 1,
+    "fields": {
+      "label": "Fiction"
+    }
+  },
+  {
+    "model": "storystashapi.genre",
+    "pk": 2,
+    "fields": {
+      "label": "Mystery/Thriller"
+    }
+  },
+  {
+    "model": "storystashapi.genre",
+    "pk": 3,
+    "fields": {
+      "label": "Science Fiction/Fantasy"
+    }
+  },
+  {
+    "model": "storystashapi.genre",
+    "pk": 4,
+    "fields": {
+      "label": "Romance"
+    }
+  },
+  {
+    "model": "storystashapi.genre",
+    "pk": 5,
+    "fields": {
+      "label": "Non-Fiction"
+    }
+  }
+]

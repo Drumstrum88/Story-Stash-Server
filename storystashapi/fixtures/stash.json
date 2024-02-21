@@ -1,0 +1,10 @@
+[
+  {
+    "model": "storystashapi.stash",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "title": "John's Reading List"
+    }
+  }
+]

@@ -1,8 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework import serializers
 from storystashapi.models.book import Book
 from storystashapi.models.genre import Genre
 from storystashapi.serializers.bookSerializer import BookSerializer
@@ -10,7 +8,7 @@ from storystashapi.serializers.bookSerializer import BookSerializer
 class BookView(ViewSet):
   """Book View"""
   
-  """Handles GET for single book"""
+  """Handles GET request for single book"""
   
   def retrieve(self, request, pk):
     try:
