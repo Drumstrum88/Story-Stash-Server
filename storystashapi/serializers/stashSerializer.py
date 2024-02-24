@@ -7,6 +7,6 @@ class StashSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Stash
-    fields = ('id', 'user_id', 'title', 'books')
+    fields = ('id', 'user', 'title', 'books',)
     depth = 2
     

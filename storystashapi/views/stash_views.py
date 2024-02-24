@@ -23,66 +23,72 @@ class StashView(ViewSet):
       return Response({'message' : ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
     
     
-  """Handle GET requests for all Genres"""
+  """Handle GET requests for all Stashes"""
   def list(self, request):
     
-    try:
-      uid = request.query_params['uid']
+    stashes = Stash.objects.all()
+    
+    uid = request.query_params.get('uid')
+    if uid is not None:
       user = User.objects.get(uid=uid)
-      stashes = Stash.objects.filter(user=user.id)
-      serializer = StashSerializer(stashes, many=True)
-      return Response(serializer.data)
-    except:
-      stashes = Stash.objects.all()
-      serializer = StashSerializer(stashes, many=True)
-      return Response(serializer.data)
+      stashes= Stash.objects.filter(user=user.id)
+    
+    serializer = StashSerializer(stashes, many=True)
+    return Response(serializer.data)
     
   
   """Handles POST request for a stash"""
   def create(self, request):
-    user = User.objects.get(pk=request.data.get('user_id'))
-    
-    stash = Stash.objects.create(
-      user=user,
-      title=request.data.get('title')
-    )
-    
-    serializer = StashSerializer(stash)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-  
-  
-  """Handles PUT for a stash"""
-  def update(self, request, pk):
     try:
-      stash = Stash.objects.get(pk=pk)
-    except Stash.DoesNotExist:
-      return Response({'error': "stash does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        user = User.objects.get(uid=request.data["user"])
+        stash = Stash.objects.create(
+            user=user,
+            title=request.data.get('title')
+        )
+        serializer = StashSerializer(stash)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except User.DoesNotExist:
+        return Response({'error': "user does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except KeyError as e:
+        return Response({'error': f"KeyError: {e}"}, status=status.HTTP_400_BAD_REQUEST)
+
+  
+  
+    """Handles PUT for a stash"""
+  def update(self, request, pk):
+    """Handles PUT requests for a stash
     
-    user_id = User.objects.get(pk=request.data.get('user_id'))
+    Returns -> JSON serialized stash instance"""
     
-    stash.user_id = user_id
+    user = User.objects.get(uid=request.data['uid'])
     
-    if 'title' in request.data:
-      stash.title = request.data['title']
-      
+    stash = Stash.objects.get(pk=pk)
+    
+    stash.title = request.data['title']
+    stash.user = user
+    
+    
     stash.save()
     serializer = StashSerializer(stash)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-"""Handles DELETE for a stash"""
-def destroy (self, request, pk):
-  stash = Stash.objects.get(pk=pk)
-  stash.delete()
-  return Response(None, status=status.HTTP)
 
 
-"""Method to get all books associated with a single stash"""
-@action(methods=['get'], detail=True)
-def books(self, request, pk):
-  book = StashBook.objects.all()
-  books = book.filter(stash_id=pk)
-  
-  serializer = StashBookSerializer(books, many=True)
-  return Response(serializer.data)
+
+  """Handles DELETE for a stash"""
+  def destroy (self, request, pk):
+    stash = Stash.objects.get(pk=pk)
+    stash.delete()
+    return Response(None, status=status.HTTP)
+
+
+  """Method to get all books associated with a single stash"""
+  @action(methods=['get'], detail=True)
+  def books(self, request, pk):
+    book = StashBook.objects.all()
+    books = book.filter(stash_id=pk)
+    
+    serializer = StashBookSerializer(books, many=True)
+    return Response(serializer.data)
   
