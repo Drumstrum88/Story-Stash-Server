@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from storystashapi.models.book import Book
 from storystashapi.models.genre import Genre
+from storystashapi.models.user import User
 from storystashapi.serializers.bookSerializer import BookSerializer
 
 class BookView(ViewSet):
@@ -28,12 +29,16 @@ class BookView(ViewSet):
   
   """Handles POST request for a new book"""
   def create(self, request):
-    genre = Genre.objects.get(pk=request.data.get('genre_id'))
+    genre = Genre.objects.get(pk=request.data.get('genre'))
+    image_url = request.data.get('image')
+    user = User.objects.get(uid=request.data['uid'])
     
     book = Book.objects.create(
       genre = genre,
       title=request.data.get('title'),
-      description=request.data.get('description')
+      description=request.data.get('description'),
+      image=image_url,
+      user=user,
       
     )
 
@@ -44,23 +49,30 @@ class BookView(ViewSet):
   """Handles PUT for a book"""
   def update(self, request, pk):
     try:
-      book = Book.objects.get(pk=pk)
+        print(f"Received book update request for pk: {pk}")
+        book = Book.objects.get(pk=pk)
     except Book.DoesNotExist:
-      return Response({'error': "Book Does Not Exist"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': "Book Does Not Exist"}, status=status.HTTP_404_NOT_FOUND)
     
-    genre = Genre.objects.get(pk=request.data.get('genre', book.genre.pk))
-    
+    try:
+        print('Request data:', request.data)
+        genre_id = int(request.data.get('genre_id'))
+        genre = Genre.objects.get(pk=genre_id)
+    except (ValueError, Genre.DoesNotExist):
+        return Response({'error': "Invalid or non-existent genre_id"}, status=status.HTTP_400_BAD_REQUEST)
+
     book.genre = genre
-    
+
     if 'title' in request.data:
-      book.title = request.data['title']
+        book.title = request.data['title']
       
     if 'description' in request.data:
-      book.description = request.data['description']
+        book.description = request.data['description']
       
     book.save()
     serializer = BookSerializer(book)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
   
   
   """Handles DELETE for book"""
