@@ -64,9 +64,7 @@ class StashView(ViewSet):
   
   """Handles PUT for a stash"""
   def update(self, request, pk):
-    """Handles PUT requests for a stash
-    
-    Returns -> JSON serialized stash instance"""
+    """Handles PUT requests for a stash"""
     
     user_uid = request.data.get('user')
     user = User.objects.get(uid=user_uid)
