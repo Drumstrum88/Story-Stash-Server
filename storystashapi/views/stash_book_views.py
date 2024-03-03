@@ -26,9 +26,10 @@ class StashBookView(ViewSet):
     
   """Handles GET request for all stash books"""
   def list(self, request):
-    stash_book = StashBook.objects.all()
-    serializer = StashBookSerializer(stash_book, many=True)
+    stash_books = StashBook.objects.all()
+    serializer = StashBookSerializer(stash_books, many=True)
     return Response(serializer.data)
+
   
   
   """Handles POST request for a stash book"""
