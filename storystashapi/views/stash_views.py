@@ -1,3 +1,4 @@
+import json
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,32 +41,38 @@ class StashView(ViewSet):
   """Handles POST request for a stash"""
   def create(self, request):
     try:
-        user = User.objects.get(uid=request.data["user"])
+        user_uid = request.data.get('user')
+        user = User.objects.get(uid=user_uid)
+        
         stash = Stash.objects.create(
             user=user,
             title=request.data.get('title')
         )
+
         serializer = StashSerializer(stash)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
     except User.DoesNotExist:
-        return Response({'error': "user does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    
     except KeyError as e:
         return Response({'error': f"KeyError: {e}"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
   
   
-    """Handles PUT for a stash"""
+  """Handles PUT for a stash"""
   def update(self, request, pk):
-    """Handles PUT requests for a stash
+    """Handles PUT requests for a stash"""
     
-    Returns -> JSON serialized stash instance"""
-    
-    user = User.objects.get(uid=request.data['uid'])
+    user_uid = request.data.get('user')
+    user = User.objects.get(uid=user_uid)
     
     stash = Stash.objects.get(pk=pk)
     
     stash.title = request.data['title']
-    stash.user = user
+    user = user
     
     
     stash.save()
@@ -80,7 +87,7 @@ class StashView(ViewSet):
   def destroy (self, request, pk):
     stash = Stash.objects.get(pk=pk)
     stash.delete()
-    return Response(None, status=status.HTTP)
+    return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
   """Method to get all books associated with a single stash"""
