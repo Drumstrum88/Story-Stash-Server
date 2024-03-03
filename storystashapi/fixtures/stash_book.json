@@ -3,45 +3,50 @@
     "model": "storystashapi.stashbook",
     "pk": 1,
     "fields": {
-      "user": 1,
-      "stash": 1,
-      "book": 1
+      "user": 2,
+      "stash": 2,
+      "book": 30,
+      "isRead": false
     }
   },
   {
     "model": "storystashapi.stashbook",
     "pk": 2,
     "fields": {
-      "user": 1,
-      "stash": 1,
-      "book": 2
+      "user": 2,
+      "stash": 2,
+      "book": 2,
+      "isRead": false
     }
   },
   {
     "model": "storystashapi.stashbook",
     "pk": 3,
     "fields": {
-      "user": 1,
-      "stash": 1,
-      "book": 3
+      "user": 2,
+      "stash": 2,
+      "book": 3,
+      "isRead": false
     }
   },
   {
     "model": "storystashapi.stashbook",
     "pk": 4,
     "fields": {
-      "user": 1,
-      "stash": 1,
-      "book": 4
+      "user": 2,
+      "stash": 2,
+      "book": 4,
+      "isRead": false
     }
   },
   {
     "model": "storystashapi.stashbook",
     "pk": 5,
     "fields": {
-      "user": 1,
-      "stash": 1,
-      "book": 5
+      "user": 2,
+      "stash": 2,
+      "book": 5,
+      "isRead": false
     }
   }
 ]

@@ -5,7 +5,6 @@ from storystashapi.models.book import Book
 from storystashapi.serializers.stashBookSerializer import StashBookSerializer
 
 class BookSerializer(serializers.ModelSerializer):
-  # stash = StashBookSerializer(many=True, read_only=True)
   
   class Meta:
     model = Book

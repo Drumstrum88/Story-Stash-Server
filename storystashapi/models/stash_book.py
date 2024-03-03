@@ -8,3 +8,4 @@ class StashBook(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
   stash = models.ForeignKey(Stash, on_delete=models.CASCADE, default=None)
   book = models.ForeignKey(Book, on_delete=models.CASCADE, default=None)
+  isRead = models.BooleanField(default=False)
