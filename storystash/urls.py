@@ -19,7 +19,7 @@ from django.urls import path
 from django.urls import include, path
 from rest_framework import routers
 from storystashapi.views.auth import check_user, register_user
-from storystashapi.views.book_views import BookView
+from storystashapi.views.book_views import BookView, search_books
 from storystashapi.views.genre_views import GenreView
 from storystashapi.views.stash_book_views import StashBookView
 from storystashapi.views.stash_views import StashView
@@ -36,5 +36,6 @@ urlpatterns = [
     path('registeruser', register_user),
     path('', include(router.urls)),
     path('books/list_filtered_by_genre/', BookView.as_view({'get': 'list_filtered_by_genre'}), name='list_filtered_by_genre'),
+    path('books/search/', search_books, name='search_books'),
 
 ]
