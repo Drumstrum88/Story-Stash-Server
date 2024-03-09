@@ -35,5 +35,6 @@ urlpatterns = [
     path('checkuser', check_user),
     path('registeruser', register_user),
     path('', include(router.urls)),
+    path('books/list_filtered_by_genre/', BookView.as_view({'get': 'list_filtered_by_genre'}), name='list_filtered_by_genre'),
 
 ]
