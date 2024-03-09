@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 from storystashapi.models.book import Book
 from storystashapi.models.genre import Genre
 from storystashapi.models.user import User
@@ -80,3 +81,19 @@ class BookView(ViewSet):
     book = Book.objects.get(pk=pk)
     book.delete()
     return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
+  """Handles GET for books filtered by Genre"""
+
+  @action(detail=False, methods=['GET'])
+  def list_filtered_by_genre(self, request):
+      selected_genre_id = request.query_params.get('genre', None)
+
+
+      if selected_genre_id:
+          books = Book.objects.filter(genre_id=selected_genre_id)
+      else:
+          books = Book.objects.all()
+
+      serializer = BookSerializer(books, many=True)
+      return Response(serializer.data)
