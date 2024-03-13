@@ -3,3 +3,4 @@ from .genreSerializer import GenreSerializer
 from .stashSerializer import StashSerializer
 from .stashBookSerializer import StashBookSerializer
 from .userSerializer import UserSerializer
+from .review_serializer import ReviewSerializer
