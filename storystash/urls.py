@@ -21,6 +21,7 @@ from rest_framework import routers
 from storystashapi.views.auth import check_user, register_user
 from storystashapi.views.book_views import BookView, search_books
 from storystashapi.views.genre_views import GenreView
+from storystashapi.views.review_views import ReviewView
 from storystashapi.views.stash_book_views import StashBookView
 from storystashapi.views.stash_views import StashView
 
@@ -29,6 +30,7 @@ router.register(r'books', BookView, 'book' )
 router.register(r'genres', GenreView, 'genre')
 router.register(r'stashes', StashView, 'stash')
 router.register(r'stashbooks', StashBookView, 'stashbook')
+router.register(r'reviews', ReviewView, 'Review')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,5 +39,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('books/list_filtered_by_genre/', BookView.as_view({'get': 'list_filtered_by_genre'}), name='list_filtered_by_genre'),
     path('books/search/', search_books, name='search_books'),
+    path('books/<int:book_id>/reviews/', ReviewView.as_view({'get': 'list'}), name='book_reviews'),
 
 ]
