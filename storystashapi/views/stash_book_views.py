@@ -111,3 +111,16 @@ class StashBookView(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except Exception as ex:
             return Response({'message': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+  def get_read_books_for_user(self, request):
+        try:
+            user_id = request.GET.get('user_id', None)
+            if user_id:
+                user = get_object_or_404(User, pk=user_id)
+                read_stash_books = StashBook.objects.filter(user=user, isRead=True)
+                serializer = StashBookSerializer(read_stash_books, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'User ID parameter is missing'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as ex:
+            return Response({'message': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
