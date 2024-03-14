@@ -39,6 +39,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('books/list_filtered_by_genre/', BookView.as_view({'get': 'list_filtered_by_genre'}), name='list_filtered_by_genre'),
     path('books/search/', search_books, name='search_books'),
-    path('books/<int:book_id>/reviews/', ReviewView.as_view({'get': 'list'}), name='book_reviews'),
-
+    path('stashbooks/read/', StashBookView.as_view({'get': 'get_read_books_for_user'}), name='read_stashbooks'),
+    path('stashbooks/get_read_books_for_user/', StashBookView.as_view({'get': 'get_read_books_for_user'}), name='get_read_books_for_user'),
 ]
+
+
